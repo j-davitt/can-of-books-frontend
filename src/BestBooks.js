@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import Carousel from 'react-bootstrap/Carousel';
+import BookCarousel from './BookCorousel';
 
 class BestBooks extends React.Component {
   constructor(props) {
@@ -9,7 +11,7 @@ class BestBooks extends React.Component {
     }
   }
 
-  
+
   getBooks = async () => {
     try {
       let url = `${process.env.REACT_APP_SERVER}/books`
@@ -26,7 +28,7 @@ class BestBooks extends React.Component {
   }
 
   // REACT LIFECYCLE METHOD
-  componentDidMount(){
+  componentDidMount() {
     this.getBooks();
   }
 
@@ -39,7 +41,19 @@ class BestBooks extends React.Component {
         <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
 
         {this.state.books.length ? (
-          <p>Book Carousel coming soon</p>
+          <Carousel>
+            {this.state.books.map((book, idx) => {
+              return (
+                <Carousel.Item>
+                  <BookCarousel 
+                    title={book.title}
+                    description={book.description}
+                    status={book.status}
+                  />
+                </Carousel.Item>
+              )
+            })}
+          </Carousel>
         ) : (
           <h3>No Books Found :(</h3>
         )}
