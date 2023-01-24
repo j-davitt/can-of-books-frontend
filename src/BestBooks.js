@@ -44,13 +44,18 @@ class BestBooks extends React.Component {
           <Carousel>
             {this.state.books.map((book, idx) => {
               return (
+
                 <Carousel.Item>
-                  <BookCarousel 
+
+                  <BookCarousel
                     title={book.title}
                     description={book.description}
                     status={book.status}
                   />
                 </Carousel.Item>
+
+
+
               )
             })}
           </Carousel>

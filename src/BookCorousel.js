@@ -7,8 +7,8 @@ class BookCarousel extends React.Component {
       <>
         <img
           className="d-block w-100"
-          src="../assets/book.jpg"
-          alt="First slide"
+          src="https://via.placeholder.com/100"
+          alt="Book Slide"
         />
         <Carousel.Caption>
           <h3>{this.props.title}</h3>
