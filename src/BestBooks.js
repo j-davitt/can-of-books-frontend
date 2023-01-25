@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Carousel from 'react-bootstrap/Carousel';
 import BookCarousel from './BookCorousel';
-import { Container, Form, Button } from 'react-bootstrap';
+import BookFormModal from './BookFormModal';
 
 class BestBooks extends React.Component {
   constructor(props) {
@@ -72,6 +72,27 @@ class BestBooks extends React.Component {
     }
   }
 
+  updateBooks = async (bookToUpdate) => {
+    try {
+      let url = `${process.env.REACT_APP_SERVER}/books/${bookToUpdate._id}`
+
+      let updatedBook = await axios.put(url, bookToUpdate);
+
+      let updatedBookArr = this.state.books.map(existingBook => {
+        return existingBook._id === bookToUpdate._id
+        ? updatedBook.data
+        : existingBook
+      });
+      
+      this.setState({
+        books: updatedBookArr
+      })
+
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
   componentDidMount() {
     this.getBooks();
   }
@@ -95,6 +116,7 @@ class BestBooks extends React.Component {
                     status={book.status}
                     deleteBooks={this.deleteBooks}
                     _id={book._id}
+                    updateBooks={this.updateBooks}
                   />
                 </Carousel.Item>
               )
@@ -104,22 +126,9 @@ class BestBooks extends React.Component {
           <h3>No Books Found :(</h3>
         )}
 
-        <Container className="mt-5">
-          <Form onSubmit={this.handleBookSubmit}>
-            <Form.Group controlId="title">
-              <Form.Label>Title</Form.Label>
-              <Form.Control type="text" />
-            </Form.Group>
-            <Form.Group controlId="description">
-              <Form.Label>Description</Form.Label>
-              <Form.Control type="text" />
-            </Form.Group>
-            <Form.Group controlId="status">
-              <Form.Check type="checkbox" label="available" />
-            </Form.Group>
-            <Button type="submit">Add Book</Button>
-          </Form>
-        </Container>
+          <BookFormModal 
+          handleBookSubmit={this.handleBookSubmit}
+          />
 
       </>
     )
