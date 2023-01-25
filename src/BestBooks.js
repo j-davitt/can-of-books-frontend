@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import Carousel from 'react-bootstrap/Carousel';
 import BookCarousel from './BookCorousel';
-import { Container, Form, Button } from 'react-bootstrap';
 import BookFormModal from './BookFormModal';
 
 class BestBooks extends React.Component {
@@ -130,23 +129,6 @@ class BestBooks extends React.Component {
           <BookFormModal 
           handleBookSubmit={this.handleBookSubmit}
           />
-
-        {/* <Container className="mt-5">
-          <Form onSubmit={this.handleBookSubmit}>
-            <Form.Group controlId="title">
-              <Form.Label>Title</Form.Label>
-              <Form.Control type="text" />
-            </Form.Group>
-            <Form.Group controlId="description">
-              <Form.Label>Description</Form.Label>
-              <Form.Control type="text" />
-            </Form.Group>
-            <Form.Group controlId="status">
-              <Form.Check type="checkbox" label="available" />
-            </Form.Group>
-            <Button type="submit">Add Book</Button>
-          </Form>
-        </Container> */}
 
       </>
     )

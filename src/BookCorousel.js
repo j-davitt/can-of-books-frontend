@@ -1,8 +1,8 @@
 import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
-import { Button } from 'react-bootstrap';
 import './Button.css'
-import UpdateBookForm from './UpdateBookForm';
+import { Container, Form, Button } from 'react-bootstrap';
+import Modal from 'react-bootstrap/Modal';
 
 class BookCarousel extends React.Component {
   constructor(props) {
@@ -10,6 +10,19 @@ class BookCarousel extends React.Component {
     this.state = {
       showUpdateForm: false
     }
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+    let bookToUpdate = {
+      title: event.target.title.value,
+      description: event.target.description.value,
+      status: event.target.status.checked,
+      _id: this.props._id,
+      __v: this.props.__v
+    }
+    this.props.updateBooks(bookToUpdate);
   }
 
   render() {
@@ -28,15 +41,33 @@ class BookCarousel extends React.Component {
 
         <Button variant="dark" id='deleteBtn' onClick={() => { this.props.deleteBooks(this.props._id) }}>Delete</Button>
         <Button variant="info" onClick={() => { this.setState({ showUpdateForm: true }) }}>Update</Button>
-        {
-          this.state.showUpdateForm &&
-          <UpdateBookForm
-            updateBooks={this.props.updateBooks}
-            title={this.props.title}
-            description={this.props.description}
-            status={this.props.status}
-          />
-        }
+        
+        <Modal show={this.state.showUpdateForm} onHide={() => { this.setState({ showUpdateForm: false }) }}>
+          <Modal.Header closeButton>
+            <Modal.Title>Fill out all info</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+
+            <Container className="mt-5">
+              <Form onSubmit={this.handleSubmit}>
+                <Form.Group controlId="title" >
+                  <Form.Label>Title</Form.Label>
+                  <Form.Control type="text" />
+                </Form.Group>
+                <Form.Group controlId="description">
+                  <Form.Label>Description</Form.Label>
+                  <Form.Control type="text" />
+                </Form.Group>
+                <Form.Group controlId="status">
+                  <Form.Check type="checkbox" label="available" />
+                </Form.Group>
+                <Button type="submit">Update Book</Button>
+              </Form>
+            </Container>
+
+          </Modal.Body>
+
+        </Modal>
       </>
 
     )
