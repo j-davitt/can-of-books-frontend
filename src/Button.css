@@ -1,0 +1,14 @@
+#deleteBtn {
+  margin-left: 50%;
+}
+
+.carousel-inner {
+  background-color: black;
+  /* justify-content: center; */
+}
+
+img {
+  margin: auto;
+  max-height: 30%;
+  max-width: 30%;
+}
